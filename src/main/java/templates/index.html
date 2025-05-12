@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Cliente</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f7fc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 30px;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+            width: 100%;
+        }
+
+        #client-form {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            margin-top: 20px;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+            color: #555;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #response-msg {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .success {
+            color: green;
+        }
+
+        .error {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<h1>Cadastrar Cliente</h1>
+<form id="client-form">
+    <label for="name">Nome:</label><br>
+    <input type="text" id="name" name="name" required><br><br>
+
+    <label for="birthDate">Data de Nascimento:</label><br>
+    <input type="date" id="birthDate" name="birthDate"><br><br>
+
+    <label for="phone">Telefone:</label><br>
+    <input type="text" id="phone" name="phone" required><br><br>
+
+    <label for="address">Endereço:</label><br>
+    <input type="text" id="address" name="address" required><br><br>
+
+    <button type="submit">Cadastrar</button>
+</form>
+
+<p id="response-msg"></p>
+
+<script>
+    const form = document.getElementById('client-form');
+    const msg = document.getElementById('response-msg');
+
+    form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const clientData = {
+            name: form.name.value,
+            birthDate: form.birthDate.value,
+            phone: form.phone.value,
+            address: form.address.value
+        };
+
+        try {
+            const response = await fetch('http://localhost:8080/client', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(clientData)
+            });
+
+            if (response.ok) {
+                msg.textContent = 'Cliente cadastrado com sucesso!';
+                msg.className = 'success';
+                form.reset();
+            } else {
+                const error = await response.text();
+                msg.textContent = 'Erro ao cadastrar cliente: ' + error;
+                msg.className = 'error';
+            }
+        } catch (err) {
+            msg.textContent = 'Erro ao conectar com o servidor.';
+            msg.className = 'error';
+        }
+    });
+</script>
+</body>
+</html>
