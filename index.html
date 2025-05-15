@@ -16,28 +16,27 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
             flex-direction: column;
+            min-height: 100vh;
             padding: 20px;
         }
 
-        h1 {
-            font-size: 30px;
-            margin-bottom: 20px;
+        h1, h2 {
+            font-size: 26px;
+            margin: 20px 0 10px;
             color: #333;
             text-align: center;
             width: 100%;
         }
 
-        #client-form {
+        form {
             background-color: #ffffff;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 400px;
-            margin-top: 20px;
+            margin-top: 10px;
         }
 
         label {
@@ -80,7 +79,7 @@
         }
 
         #response-msg {
-            margin-top: 20px;
+            margin-top: 15px;
             text-align: center;
             font-size: 16px;
         }
@@ -92,27 +91,58 @@
         .error {
             color: red;
         }
+
+        ul#search-results {
+            list-style: none;
+            margin-top: 20px;
+            padding-left: 0;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        ul#search-results li {
+            background-color: #fff;
+            padding: 12px;
+            margin-bottom: 8px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        ul#search-results li.error {
+            color: red;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
+
 <h1>Cadastrar Cliente</h1>
 <form id="client-form">
-    <label for="name">Nome:</label><br>
-    <input type="text" id="name" name="name" required><br><br>
+    <label for="name">Nome:</label>
+    <input type="text" id="name" name="name" required>
 
-    <label for="birthDate">Data de Nascimento:</label><br>
-    <input type="date" id="birthDate" name="birthDate"><br><br>
+    <label for="birthDate">Data de Nascimento:</label>
+    <input type="date" id="birthDate" name="birthDate">
 
-    <label for="phone">Telefone:</label><br>
-    <input type="text" id="phone" name="phone" required><br><br>
+    <label for="phone">Telefone:</label>
+    <input type="text" id="phone" name="phone" required>
 
-    <label for="address">Endereço:</label><br>
-    <input type="text" id="address" name="address" required><br><br>
+    <label for="address">Endereço:</label>
+    <input type="text" id="address" name="address" required>
 
     <button type="submit">Cadastrar</button>
 </form>
 
 <p id="response-msg"></p>
+
+<h2>Buscar Cliente</h2>
+<form id="search-form">
+    <label for="searchName">Nome do Cliente:</label>
+    <input type="text" id="searchName" name="searchName" required>
+    <button type="submit">Buscar</button>
+</form>
+
+<ul id="search-results"></ul>
 
 <script>
     const form = document.getElementById('client-form');
@@ -151,6 +181,46 @@
             msg.className = 'error';
         }
     });
+
+    const searchForm = document.getElementById('search-form');
+    const searchResults = document.getElementById('search-results');
+
+    searchForm.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const searchName = document.getElementById('searchName').value;
+
+        searchResults.innerHTML = '';
+
+        const loadingMsg = document.createElement('li');
+        loadingMsg.textContent = 'Carregando...';
+        searchResults.appendChild(loadingMsg);
+
+        try {
+            const response = await fetch(`http://localhost:8080/client/name?name=${encodeURIComponent(searchName)}`);
+            loadingMsg.remove();
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                searchResults.innerHTML = `<li class="error">Erro: ${errorText}</li>`;
+                return;
+            }
+
+            const clients = await response.json();
+            if (clients.length === 0) {
+                searchResults.innerHTML = '<li>Nenhum cliente encontrado.</li>';
+            } else {
+                clients.forEach(client => {
+                    const item = document.createElement('li');
+                    item.textContent = `Nome: ${client.name}, Telefone: ${client.phone}, Endereço: ${client.address}`;
+                    searchResults.appendChild(item);
+                });
+            }
+        } catch (error) {
+            loadingMsg.remove();
+            searchResults.innerHTML = '<li class="error">Erro ao buscar clientes.</li>';
+        }
+    });
 </script>
+
 </body>
 </html>
