@@ -24,35 +24,16 @@ Educação de qualidade: aplicação prática dos conhecimentos adquiridos na fo
 
 ## 🌐 Acesse o site
 
+<img src="ft/foto.png" alt="foto" width="400"/>
+
+
+Você pode acessar a interface de cadastro diretamente pelo link abaixo:
+
 🔗 [https://lauluah.github.io/pizzaria-projeto/](https://lauluah.github.io/pizzaria-projeto/)
 
-✅ Como usar
-- Rode o projeto back-end localmente:
-
-Certifique-se de ter o Java 21 instalado. Depois, execute o projeto Spring Boot usando sua IDE.
-Isso iniciará o servidor back-end da aplicação.
-
-Acesse a interface web:
-Vá até o link do site hospedado no GitHub Pages:
-
-🔗 https://lauluah.github.io/pizzaria-projeto/
-
-- Atualize a página após iniciar o servidor:
-
-Depois que o back-end estiver rodando, recarregue a página do site para garantir a conexão entre o front-end e o back-end.
-
-- Use o sistema:
-
-Agora você pode:
-Cadastrar novos clientes
-Buscar clientes cadastrados
-
 ## 🚀 Tecnologias utilizadas
-Java 21
 
+- Java
 - Spring Boot
-- PostgreSQL (via Supabase)
-- Jakarta Validation
-- Lombok
-- HTML5 e CSS3 
-
+- Jakarta Validation (Bean Validation)
+- HTML5, CSS3
