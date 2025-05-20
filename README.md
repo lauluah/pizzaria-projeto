@@ -24,6 +24,9 @@ Educação de qualidade: aplicação prática dos conhecimentos adquiridos na fo
 
 ## 🌐 Acesse o site
 
+<img src="ft/foto.png" alt="foto" width="400"/>
+
+
 Você pode acessar a interface de cadastro diretamente pelo link abaixo:
 
 🔗 [https://lauluah.github.io/pizzaria-projeto/](https://lauluah.github.io/pizzaria-projeto/)
