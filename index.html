@@ -122,7 +122,7 @@
     <input type="text" id="name" name="name" required>
 
     <label for="birthDate">Data de Nascimento:</label>
-    <input type="date" id="birthDate" name="birthDate">
+    <input type="date" id="birthDate" name="birthDate" required>
 
     <label for="phone">Telefone:</label>
     <input type="text" id="phone" name="phone" required>
@@ -151,6 +151,21 @@
     form.addEventListener('submit', async (event) => {
         event.preventDefault();
 
+        const birthDate = new Date(form.birthDate.value);
+        const today = new Date();
+
+        if (!form.birthDate.value) {
+            msg.textContent = 'A data de nascimento é obrigatória.';
+            msg.className = 'error';
+            return;
+        }
+
+        if (birthDate >= today) {
+            msg.textContent = 'A data de nascimento deve estar no passado.';
+            msg.className = 'error';
+            return;
+        }
+
         const clientData = {
             name: form.name.value,
             birthDate: form.birthDate.value,
@@ -172,10 +187,20 @@
                 msg.className = 'success';
                 form.reset();
             } else {
-                const error = await response.text();
-                msg.textContent = 'Erro ao cadastrar cliente: ' + error;
+                const errorData = await response.json();
+                msg.textContent = 'Erro ao cadastrar cliente:';
                 msg.className = 'error';
+
+                const ul = document.createElement('ul');
+                for (const field in errorData) {
+                    const li = document.createElement('li');
+                    li.textContent = `${field}: ${errorData[field]}`;
+                    li.classList.add('error');
+                    ul.appendChild(li);
+                }
+                msg.appendChild(ul);
             }
+
         } catch (err) {
             msg.textContent = 'Erro ao conectar com o servidor.';
             msg.className = 'error';
