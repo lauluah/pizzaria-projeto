@@ -12,17 +12,16 @@ import java.time.LocalDate;
 @Getter
 public class ClientDTOrequest {
 
-    @NotBlank(message = "The name is required and cannot be blank.")
-    @Size(min = 3, max = 50, message = "The name must be between 3 and 50 characters.")
+    @NotBlank(message = "O nome é obrigatório.")
     private String name;
 
-    @Past(message = "The birth date must be in the past.")
+    @Past(message = "A data de nascimento deve estar no passado.")
     private LocalDate birthDate;
 
-    @NotBlank(message = "The phone number is required and cannot be blank.")
+    @NotBlank(message = "O telefone é obrigatório.")
     private String phone;
 
-    @NotBlank(message = "The address is required and cannot be blank.")
+    @NotBlank(message = "O endereço é obrigatório.")
     private String address;
 
     public ClientDTOrequest(String name, LocalDate birthDate, String phone, String address) {
