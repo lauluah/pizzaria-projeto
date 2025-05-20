@@ -29,8 +29,11 @@ Você pode acessar a interface de cadastro diretamente pelo link abaixo:
 🔗 [https://lauluah.github.io/pizzaria-projeto/](https://lauluah.github.io/pizzaria-projeto/)
 
 ## 🚀 Tecnologias utilizadas
+Java 21
 
-- Java
-- Spring Boot
-- Jakarta Validation (Bean Validation)
-- HTML5, CSS3
+Spring Boot
+PostgreSQL (via Supabase)
+Jakarta Validation
+Lombok
+HTML5 e CSS3 
+
