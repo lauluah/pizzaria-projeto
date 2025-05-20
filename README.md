@@ -31,9 +31,9 @@ Você pode acessar a interface de cadastro diretamente pelo link abaixo:
 ## 🚀 Tecnologias utilizadas
 Java 21
 
-Spring Boot
-PostgreSQL (via Supabase)
-Jakarta Validation
-Lombok
-HTML5 e CSS3 
+- Spring Boot
+- PostgreSQL (via Supabase)
+- Jakarta Validation
+- Lombok
+- HTML5 e CSS3 
 
